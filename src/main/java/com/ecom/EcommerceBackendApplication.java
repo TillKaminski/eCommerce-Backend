@@ -16,6 +16,7 @@ public class EcommerceBackendApplication {
 		SpringApplication.run(EcommerceBackendApplication.class, args);
 	}
 
+	/*
 	@Bean
 	public CorsFilter corsFilter() {
 		CorsConfiguration corsConfiguration = new CorsConfiguration();
@@ -31,6 +32,6 @@ public class EcommerceBackendApplication {
 		urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
 		return new CorsFilter(urlBasedCorsConfigurationSource);
 	}
-	
+	*/
 	
 }

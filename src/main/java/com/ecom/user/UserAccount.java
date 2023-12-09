@@ -37,9 +37,13 @@ public class UserAccount implements Serializable{
 	private long balance; // TODO maximales Negativkonto, sonst keine Transaktion möglich
 	@Enumerated(EnumType.STRING)
 	private UserRole userRole;
+	
+	
+	// TODO OneToMany nicht sinnvoll
+
 	@OneToMany(mappedBy = "userAccount", cascade = CascadeType.ALL) //, fetch = FetchType.LAZY)
 	private List<Deposit> deposit = new ArrayList<>();
-		
+
 	
 	public UserAccount() {
 		super();
@@ -93,6 +97,7 @@ public class UserAccount implements Serializable{
 	public void setUserRole(UserRole userRole) {
 		this.userRole = userRole;
 	}
+
 	public List<Deposit> getDeposit() {
 		return deposit;
 	}
@@ -100,10 +105,11 @@ public class UserAccount implements Serializable{
 		this.deposit = deposit;
 	}
 
+
 	@Override
 	public String toString() {
 		return "UserAccount [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", eMail=" + eMail
-				+ ", balance=" + balance + ", userRole=" + userRole + ", deposit=" + deposit + "]";
+				+ ", balance=" + balance + ", userRole=" + userRole + ", deposit=" + deposit + "]"; // + ", deposit=" + deposit
 	}
 
 	public static Comparator<UserAccount> balanceComparator = Comparator.comparingLong(UserAccount::getBalance);

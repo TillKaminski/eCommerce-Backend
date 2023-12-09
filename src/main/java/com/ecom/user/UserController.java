@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ecom.deposit.Deposit;
+//import com.ecom.deposit.Deposit;
 
 @RestController
 @RequestMapping(path = "api")
@@ -69,11 +69,13 @@ public class UserController {
 		return new ResponseEntity<>("Deleted User with ID: " + userID, HttpStatus.OK);
 	}
 	
+	
+	/*
 	// TODO --- Zahlungen behandeln ---
 	@PutMapping (path = "/edit/deposit")
 	// TODO PutMapping nicht notwendig, da Mapping in PaymentController. Zwei Bodies nicht möglich
 	public ResponseEntity<Boolean> addDeposit(@RequestBody UserAccount userAccount, @RequestBody Deposit deposit) {
 		return new ResponseEntity<>(userService.addDeposit(userAccount, deposit), HttpStatus.OK);
 	}
-
+	*/
 }

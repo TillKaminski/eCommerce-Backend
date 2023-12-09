@@ -30,9 +30,19 @@ public class DepositController {
 		return new ResponseEntity<>(deposit, HttpStatus.OK );
 	}
 	
+	@GetMapping (path = "/{userId}/paymentssorted")
+	public ResponseEntity<List<Deposit>> getPaymentsSorted(@PathVariable("userId") Long userId) {
+		List<Deposit> deposit = depositService.getDepositByUserId(userId);
+		//System.out.println("€€€DepoContr" + userId);
+		return new ResponseEntity<>(deposit, HttpStatus.OK );
+	}
+	
+	
+	
 	@PutMapping (path = "/addpayment")
+	// TODO PutMapping nicht notwendig, da Mapping in PaymentController. Zwei Bodies nicht möglich
 	public ResponseEntity<Deposit> addDeposit(@RequestBody UserAccount userAccount, @RequestBody Deposit deposit) {
-		Deposit tmpDeposit = depositService.addDeposit(deposit, userAccount);
+		Deposit tmpDeposit = depositService.addDeposit(userAccount, deposit);
 		return new ResponseEntity<>(tmpDeposit, HttpStatus.OK);
 	}
 }

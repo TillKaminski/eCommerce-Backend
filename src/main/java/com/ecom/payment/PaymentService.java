@@ -17,8 +17,15 @@ public class PaymentService {
 		this.depositService = depositService;
 	}
 	
-	public boolean addDeposit(Deposit deposit, UserAccount userAccount) {
-		Deposit tmpDeposit = depositService.addDeposit(deposit, userAccount); 	//Kunden mit Zahlung verknüpfen
+	public UserAccount verifyUser(Long UserId) {
+		if (userService.getUserById(UserId) != null) {
+			return userService.getUserById(UserId);
+		}
+		return null;
+	}
+	
+	public boolean addDeposit(UserAccount userAccount, Deposit deposit) {
+		Deposit tmpDeposit = depositService.addDeposit(userAccount, deposit); 	//Kunden mit Zahlung verknüpfen
 		return userService.addDeposit(userAccount, tmpDeposit);					//Kundendaten updaten
 	}
 }

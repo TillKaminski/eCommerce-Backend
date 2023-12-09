@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class DepositConfig {
 	
+	// TODO Überflüssig, da gemeinsame MyConfig
+	
 	@Bean
 	CommandLineRunner commandLineRunnerDeposit(DepositRepository depositRepositry) {
 		return args ->  {

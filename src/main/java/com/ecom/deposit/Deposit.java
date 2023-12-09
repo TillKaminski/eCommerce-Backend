@@ -1,6 +1,7 @@
 package com.ecom.deposit;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.Comparator;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -23,7 +24,7 @@ public class Deposit {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	private Date date;
+	private LocalDate date;
 	private Long depositValue;
 	private boolean authorized;
 	@ManyToOne
@@ -36,13 +37,13 @@ public class Deposit {
 	public Deposit() {
 		super();
 		this.id = -1L;
-		this.date = new Date();
+		this.date = LocalDate.now();
 		this.depositValue = 0L;
 		this.authorized = false;
 		//this.userAccount = new UserAccount("Deposit Name", "Deposit lastName", "Deposit eMail", 1000L, UserRole.EMPLOYEE);
 	}
 	
-	public Deposit(Date date, Long depositValue, boolean authorized, UserAccount userAccount) {
+	public Deposit(LocalDate date, Long depositValue, boolean authorized, UserAccount userAccount) {
 		super();
 		this.date = date;
 		this.depositValue = depositValue;
@@ -50,11 +51,11 @@ public class Deposit {
 		this.userAccount = userAccount;
 	}
 
-	public Date getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 
@@ -88,6 +89,8 @@ public class Deposit {
 	
 	
 	
+	public static Comparator<Deposit> dateComparator = Comparator.comparing(Deposit::getDate);
+	public static Comparator<Deposit> dateComparatorRev = Comparator.comparing(Deposit::getDate).reversed();
 	
 	
 	

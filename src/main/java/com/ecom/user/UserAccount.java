@@ -2,6 +2,7 @@ package com.ecom.user;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import com.ecom.deposit.Deposit;
@@ -105,6 +106,8 @@ public class UserAccount implements Serializable{
 				+ ", balance=" + balance + ", userRole=" + userRole + ", deposit=" + deposit + "]";
 	}
 
+	public static Comparator<UserAccount> balanceComparator = Comparator.comparingLong(UserAccount::getBalance);
+	public static Comparator<UserAccount> balanceComparatorRev = Comparator.comparingLong(UserAccount::getBalance).reversed();
 	
 	
 }

@@ -44,6 +44,13 @@ public class UserController {
 		return new ResponseEntity<> (users, HttpStatus.OK);
 	}
 	
+	@GetMapping (path = "/allsorted")
+	public ResponseEntity <List<UserAccount>> getUsersSorted() {
+		System.out.println("€€€SORT");
+		List<UserAccount> users = userService.getUserSorted();		
+		return new ResponseEntity<> (users, HttpStatus.OK);
+	}
+	
 	@PutMapping (path = "/edit")
 	public ResponseEntity<UserAccount> editUser(@RequestBody UserAccount userAccount) {
 		userService.editUser(userAccount);
@@ -64,6 +71,7 @@ public class UserController {
 	
 	// TODO --- Zahlungen behandeln ---
 	@PutMapping (path = "/edit/deposit")
+	// TODO PutMapping nicht notwendig, da Mapping in PaymentController. Zwei Bodies nicht möglich
 	public ResponseEntity<Boolean> addDeposit(@RequestBody UserAccount userAccount, @RequestBody Deposit deposit) {
 		return new ResponseEntity<>(userService.addDeposit(userAccount, deposit), HttpStatus.OK);
 	}

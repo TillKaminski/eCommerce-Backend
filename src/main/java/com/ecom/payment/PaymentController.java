@@ -3,6 +3,7 @@ package com.ecom.payment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,9 +23,21 @@ public class PaymentController {
 		this.paymentService = paymentService;
 	}
 	
-	@PutMapping (path = "{userId}/addpayment")
+	@PostMapping (path = "{userId}/addpayment")
 	// Reicht Zahlung an Kunden und Zahlung weiter
 	public ResponseEntity<Boolean> addDeposit(@PathVariable("userId") Long userId, @RequestBody Deposit deposit) {
+		if (paymentService.verifyUser(userId) != null) {
+			UserAccount userAccount = paymentService.verifyUser(userId);
+			Boolean paymentSuccess = paymentService.addDeposit(userAccount, deposit);
+			return new ResponseEntity<>(paymentSuccess, HttpStatus.OK);
+		}
+		return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+	}
+	
+	@PutMapping (path = "{userId}/resubpayment")
+	// Reicht Zahlung an Kunden und Zahlung weiter
+	// TODO nur für Mitarbeiter
+	public ResponseEntity<Boolean> resubmitDeposit(@PathVariable("userId") Long userId, @RequestBody Deposit deposit) {
 		if (paymentService.verifyUser(userId) != null) {
 			UserAccount userAccount = paymentService.verifyUser(userId);
 			Boolean paymentSuccess = paymentService.addDeposit(userAccount, deposit);

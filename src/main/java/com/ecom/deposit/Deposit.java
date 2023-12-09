@@ -27,6 +27,7 @@ public class Deposit {
 	private LocalDate date;
 	private Long depositValue;
 	private boolean authorized;
+	// TODO Gebühr implementieren private Long fee;
 	@ManyToOne
 	@JoinColumn(name = "user_account_id") //, updatable = false, nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE) // nicht nutzen, da Zahlungen relevant

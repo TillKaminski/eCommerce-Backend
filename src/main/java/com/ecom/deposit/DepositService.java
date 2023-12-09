@@ -1,5 +1,7 @@
 package com.ecom.deposit;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +19,7 @@ public class DepositService {
 	}	
 	
 	// TODO Zahlunge sortieren
-	public List<Deposit> getDepositSorted(String sortField, boolean reverse) {
+	public List<Deposit> getDepositSorted(boolean reverse) {
 		List<Deposit> depositSort = depositRepository.findAll();
 		if (!reverse) {
 			depositSort.sort(Deposit.dateComparator);
@@ -33,9 +35,94 @@ public class DepositService {
 		return depositPeriod;
 	}
 	
-	public List<Deposit> getDepositSumPeriod(Date dateBegin, Date dateEnd) {
+	
+	//TODO Testen!!!
+	public Long getDepositSumPeriod(String strDateBegin, String strDateEnd) {
+		
 		List<Deposit> depositSumPeriod = depositRepository.findAll();
-		return depositSumPeriod;
+		depositSumPeriod.sort(Deposit.dateComparator); //Reihenfolge richtig?
+		
+		
+		System.out.println("_StringService " + strDateBegin);
+		System.out.println("_StringService " + strDateEnd);
+		
+		Long sumDeposit = 0L;
+		LocalDate dateBegin;
+		LocalDate dateEnd;
+		
+		//LocalDate dateFallback = LocalDate.now();
+		
+		Boolean boolBegin = false;
+		Boolean boolEnd = false;
+		
+		String dateFormat = "yyyy-MM-dd";
+		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(dateFormat);
+		
+		try {
+			dateBegin = LocalDate.parse(strDateBegin, dateFormatter);
+			dateEnd = LocalDate.parse(strDateEnd, dateFormatter);	
+		} catch (RuntimeException e) {
+			
+			dateBegin = null;
+			dateEnd = null;
+			
+			//dateBegin = dateFallback;
+			//dateEnd = dateFallback;
+			
+			System.out.println("Format(Date) invalid!");
+			System.out.println("Error: " + e.getMessage());
+		}
+		
+		/*
+		System.out.println("€€€1 Dateformat: " + dateBegin);
+		System.out.println("€€€2 Dateformat: " + dateEnd);
+		 */
+		// TODO Datum vorher auswerten, vorher nacher
+		
+		
+		
+		
+			for (Deposit deposit : depositSumPeriod) {
+				// TODO Format Datum konvertieren/prüfen
+				
+				/*
+				System.out.println("€€€B Dateformat: " + deposit.getDate().isAfter(dateBegin));
+				System.out.println("€€€B Dateformat: " + deposit.getDate().isBefore(dateEnd));
+				System.out.println("€€€B Dateformat: ___________________");
+				*/
+				
+				// TODO dateBegin oder dateEnd => kein Datum gesetzt => keine Grenze für Einträge
+				if (dateBegin != null) {
+					boolBegin = (deposit.getDate().isAfter(dateBegin) || deposit.getDate().equals(dateBegin)) ? true : false;
+				} else {
+					boolBegin = true;
+				}
+				if (dateEnd != null) {
+					boolEnd = (deposit.getDate().isBefore(dateEnd) || deposit.getDate().equals(dateEnd)) ? true : false;
+				} else {
+					boolEnd = true;
+				}
+				
+				sumDeposit = (boolBegin && boolEnd) ? sumDeposit + deposit.getDepositValue() : sumDeposit;
+				
+				// TODO Exit for möglich, da Liste sortiert
+				
+				/*
+				if (dateBegin != null && dateEnd != null) {
+					sumDeposit = (deposit.getDate().isAfter(dateBegin) && deposit.getDate().isBefore(dateEnd)) ? sumDeposit + deposit.getDepositValue() : sumDeposit;
+				}
+				if (dateBegin != null && dateEnd == null) {
+					sumDeposit = (deposit.getDate().isAfter(dateEnd)) ? sumDeposit + deposit.getDepositValue() : sumDeposit;
+				}
+				if (dateBegin == null && dateEnd != null) {
+					sumDeposit = (deposit.getDate().isBefore(dateEnd)) ? sumDeposit + deposit.getDepositValue() : sumDeposit;
+				}
+				if (dateBegin == null && dateEnd == null) {
+					sumDeposit =  sumDeposit + deposit.getDepositValue();
+				}
+				*/
+			}
+		return sumDeposit;
 	}
 
 	public List<Deposit> getDepositByUserId(Long userId) {
@@ -43,10 +130,15 @@ public class DepositService {
 		return depositRepository.findDepositByUserAccountId(userId).get();
 	}
 	
-	public List<Deposit> getDepositByUserIdSorted(Long userId) {
+	public List<Deposit> getDepositByUserIdSorted(Long userId, boolean reverse) {
 		// TODO Anpassen: zu userId Zahlungen finden
 		List<Deposit> deposit = depositRepository.findDepositByUserAccountId(userId).get();
-		deposit.sort(Deposit.dateComparator);
+		
+		if (!reverse) {
+			deposit.sort(Deposit.dateComparator);
+		} else {
+			deposit.sort(Deposit.dateComparatorRev);
+		}
 		return deposit;
 	}
 	

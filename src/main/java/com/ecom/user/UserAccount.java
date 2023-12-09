@@ -34,7 +34,7 @@ public class UserAccount implements Serializable{
 	private String firstName;
 	private String lastName;
 	private String eMail;
-	private long balance;
+	private long balance; // TODO maximales Negativkonto, sonst keine Transaktion möglich
 	@Enumerated(EnumType.STRING)
 	private UserRole userRole;
 	@OneToMany(mappedBy = "userAccount", cascade = CascadeType.ALL) //, fetch = FetchType.LAZY)

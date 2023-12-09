@@ -75,8 +75,14 @@ public class MyConfig implements CommandLineRunner {
         deposit5.setDepositValue(22L);
         deposit5.setUserAccount(user3);
         
+        LocalDate nowDate5 = LocalDate.of(2022, 5, 6);
+        Deposit deposit6 = new Deposit();
+        deposit6.setDate(nowDate5);
+        deposit6.setDepositValue(1234L);
+        deposit6.setUserAccount(user);
+        
 
-        depositRepository.saveAll(List.of(frst, deposit, deposit2, deposit3, deposit4, deposit5));
+        depositRepository.saveAll(List.of(frst, deposit, deposit2, deposit3, deposit4, deposit5, deposit6));
 		
 	}
 	

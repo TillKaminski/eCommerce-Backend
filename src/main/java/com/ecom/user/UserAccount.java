@@ -4,20 +4,23 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ecom.payment.Deposit;
+import com.ecom.deposit.Deposit;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+//import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 
 @Entity
+@Table(name = "useraccount")
 public class UserAccount implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -26,13 +29,14 @@ public class UserAccount implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(updatable = false, nullable = false)
 	private long id;
+	// TODO Hash fuer UserId!!!
 	private String firstName;
 	private String lastName;
 	private String eMail;
 	private long balance;
 	@Enumerated(EnumType.STRING)
 	private UserRole userRole;
-	@OneToMany(mappedBy = "userAccount", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "userAccount", cascade = CascadeType.ALL) //, fetch = FetchType.LAZY)
 	private List<Deposit> deposit = new ArrayList<>();
 		
 	
@@ -88,19 +92,19 @@ public class UserAccount implements Serializable{
 	public void setUserRole(UserRole userRole) {
 		this.userRole = userRole;
 	}
-	/*public List<Deposit> getDeposit() {
+	public List<Deposit> getDeposit() {
 		return deposit;
 	}
 	public void setDeposit(List<Deposit> deposit) {
 		this.deposit = deposit;
-
+	}
 
 	@Override
 	public String toString() {
 		return "UserAccount [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", eMail=" + eMail
 				+ ", balance=" + balance + ", userRole=" + userRole + ", deposit=" + deposit + "]";
 	}
-	*/
+
 	
 	
 }

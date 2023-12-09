@@ -1,13 +1,8 @@
-package com.ecom.payment;
-
-import java.util.Date;
-import java.util.List;
+package com.ecom.deposit;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import com.ecom.user.UserAccount;
 
 @Configuration
 public class DepositConfig {

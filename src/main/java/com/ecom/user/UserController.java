@@ -13,19 +13,34 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ecom.deposit.Deposit;
+
 @RestController
 @RequestMapping(path = "api")
 public class UserController {
 	
+	
+	//Dependency Injection
 	private final UserService userService;
 	
 	public UserController(UserService userService) {
 		this.userService = userService;
 	}
 	
+	
+	//
 	@GetMapping (path = "/all")
 	public ResponseEntity <List<UserAccount>> getUsers() {
 		List<UserAccount> users = userService.getUserAll();
+		System.out.println("€€€UserContr" + users);
+		/*
+			for (int i = 0; i < users.size(); i++) {
+				UserAccount tempAcc = new UserAccount();
+				tempAcc =  users.get(i);
+				
+				System.out.println(tempAcc);
+			}
+		*/		
 		return new ResponseEntity<> (users, HttpStatus.OK);
 	}
 	
@@ -47,6 +62,10 @@ public class UserController {
 		return new ResponseEntity<>("Deleted User with ID: " + userID, HttpStatus.OK);
 	}
 	
-
+	// TODO --- Zahlungen behandeln ---
+	@PutMapping (path = "/edit/deposit")
+	public ResponseEntity<Boolean> addDeposit(@RequestBody UserAccount userAccount, @RequestBody Deposit deposit) {
+		return new ResponseEntity<>(userService.addDeposit(userAccount, deposit), HttpStatus.OK);
+	}
 
 }

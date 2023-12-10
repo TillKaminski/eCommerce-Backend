@@ -1,8 +1,6 @@
 package com.ecom.deposit;
-
 import java.time.LocalDate;
 import java.util.List;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +12,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ecom.user.UserAccount;
+
+/*
+ * 	Verarbeitet Anfragen für Zahlungen
+ * 
+ * 	URL: api
+ * 	"/{userId}/payments" 
+ * 	"/{userId}/paymentssorted/{boolOrder}"
+ * 	"/payments/sumperiod/{dateBegin}/{dateEnd}"
+ * 	"/addpayment"
+ * 	"/resubpayment"
+ */
+
+
+
 
 @RequestMapping(path = "api")
 @RestController
@@ -51,14 +63,14 @@ public class DepositController {
 	
 	
 	@PostMapping (path = "/addpayment")
-	// TODO PostMapping nicht notwendig, da Mapping in PaymentController. Zwei Bodies nicht möglich
+	// TODO ? PostMapping nicht notwendig, da Mapping in PaymentController. Zwei Bodies nicht möglich
 	public ResponseEntity<Deposit> addDeposit(@RequestBody UserAccount userAccount, @RequestBody Deposit deposit) {
 		Deposit tmpDeposit = depositService.addDeposit(userAccount, deposit);
 		return new ResponseEntity<>(tmpDeposit, HttpStatus.OK);
 	}
 	
 	@PutMapping (path = "/resubpayment")
-	// TODO nur für Mitarbeiter
+	// TODO DO nur für Mitarbeiter
 	public ResponseEntity<Deposit> resubmitDeposit(@RequestBody UserAccount userAccount, @RequestBody Deposit deposit) {
 		Deposit tmpDeposit = depositService.addDeposit(userAccount, deposit);
 		return new ResponseEntity<>(tmpDeposit, HttpStatus.OK);

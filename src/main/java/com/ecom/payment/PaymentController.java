@@ -12,10 +12,22 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ecom.deposit.Deposit;
 import com.ecom.user.UserAccount;
 
+
+
+/*
+ * 
+ * 	Nimmt Zahlungsanfragen entgegen
+ * 
+ * 	URLs: api/pay
+ * 	"[ID]/addpayment"
+ * 	"[ID]/resubpayment"
+ * 
+ * 
+ */
+
 @RestController
 @RequestMapping(path = "api/pay")
 public class PaymentController {
-	// TODO nicht notwendig
 	
 	private final PaymentService paymentService;
 	
@@ -26,6 +38,7 @@ public class PaymentController {
 	@PostMapping (path = "{userId}/addpayment")
 	// Reicht Zahlung an Kunden und Zahlung weiter
 	public ResponseEntity<Boolean> addDeposit(@PathVariable("userId") Long userId, @RequestBody Deposit deposit) {
+		// Gehört eigentlich in den Service?!
 		if (paymentService.verifyUser(userId) != null) {
 			UserAccount userAccount = paymentService.verifyUser(userId);
 			Boolean paymentSuccess = paymentService.addDeposit(userAccount, deposit);
@@ -36,7 +49,7 @@ public class PaymentController {
 	
 	@PutMapping (path = "{userId}/resubpayment")
 	// Reicht Zahlung an Kunden und Zahlung weiter
-	// TODO nur für Mitarbeiter
+	// TODO DO nur für Mitarbeiter
 	public ResponseEntity<Boolean> resubmitDeposit(@PathVariable("userId") Long userId, @RequestBody Deposit deposit) {
 		if (paymentService.verifyUser(userId) != null) {
 			UserAccount userAccount = paymentService.verifyUser(userId);

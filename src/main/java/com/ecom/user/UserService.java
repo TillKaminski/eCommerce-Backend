@@ -23,17 +23,12 @@ import com.ecom.deposit.Deposit;
 public class UserService {
 
 	//Dependency Injection
-	private final UserRepository userRepository;
-	
-	// TODO Business Logic
-	
+	private final UserRepository userRepository;	
 	
 	public UserService(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
 	
-	
-	// TODO Sortierung nach Kontostand (flexibel durch Feld?!)
 	public List<UserAccount> getUserAll() {
 		return userRepository.findAll();
 	}
@@ -52,24 +47,27 @@ public class UserService {
 	}
 	
 	
-
+	
+	// Kein UserManagement!
 	public UserAccount editUser(UserAccount userAccount) {
-		// TODO public UserAccount editUser(UserAccount userAccount)
+		// TODO DEL public UserAccount editUser(UserAccount userAccount)
 		return null;
 	}
 
 	public void createUser(UserAccount userAccount) {
-		// TODO public void createUser(UserAccount userAccount)
+		// TODO DEL public void createUser(UserAccount userAccount)
+		// ausgelagert in Registration
 		
 	}
 
+	
 	public void deleteUserByID(Long userID) {
-		// TODO public void deleteUserByID(Long userID)
+		// TODO DO public void deleteUserByID(Long userID)
 		
 	}
 
 	public boolean addDeposit(UserAccount userAccount, Deposit deposit) {
-		// TODO Zahlungen > 0 ?! anpassen, Gebühren etc
+		// TODO ? Zahlungen > 0 ?! anpassen, Gebühren etc
 		if (deposit.getDepositValue() > 0L || deposit.isAuthorized()) {
 			Long editBalance = userAccount.getBalance() + deposit.getDepositValue();
 			userAccount.setBalance(editBalance);

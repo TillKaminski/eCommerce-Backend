@@ -17,6 +17,14 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
+/*
+ * 
+ * 	Tabelle Zahlungen
+ * 
+ * 
+ */
+
+
 @Entity
 @Table(name = "deposit")
 public class Deposit {
@@ -27,8 +35,6 @@ public class Deposit {
 	private LocalDate date;
 	private Long depositValue;
 	private boolean authorized;
-	// TODO Gebühr implementieren private Long fee;
-	// TODO Problem mit application.properties: create-drop versucht foreign key zu löschen, ist aber nicht vorhanden
 	@ManyToOne
 	@JoinColumn(name = "user_account_id") //, updatable = false, nullable = false)
 	@OnDelete(action = OnDeleteAction.CASCADE) // nicht nutzen, da Zahlungen relevant

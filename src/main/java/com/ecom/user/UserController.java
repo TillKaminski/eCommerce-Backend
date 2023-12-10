@@ -20,7 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
  * 	Controller um HTTP Requests an Service weiterzureichen
  * 	nur für Benutzerkonten zuständig
  * 
- * 	URLs:
+ * 	URLs: api
+ * 
  *	"/all"
  * 	"/allsorted"
  * 	"/edit"
@@ -88,9 +89,9 @@ public class UserController {
 	
 	
 	/*
-	// TODO --- Zahlungen behandeln ---
+	// --- Zahlungen behandeln ---
 	@PutMapping (path = "/edit/deposit")
-	// TODO PutMapping nicht notwendig, da Mapping in PaymentController. Zwei Bodies nicht möglich
+	// TODO DEL PutMapping nicht notwendig, da Mapping in PaymentController. Zwei Bodies nicht möglich
 	public ResponseEntity<Boolean> addDeposit(@RequestBody UserAccount userAccount, @RequestBody Deposit deposit) {
 		return new ResponseEntity<>(userService.addDeposit(userAccount, deposit), HttpStatus.OK);
 	}

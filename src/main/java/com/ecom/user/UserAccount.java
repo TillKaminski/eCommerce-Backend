@@ -20,6 +20,13 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 
+/*
+ * 
+ * 	Tabelle Benutzer-Konten
+ * 
+ */
+
+
 @Entity
 @Table(name = "useraccount")
 public class UserAccount implements Serializable{
@@ -30,17 +37,14 @@ public class UserAccount implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(updatable = false, nullable = false)
 	private long id;
-	// TODO Hash fuer UserId!!!
+	// TODO DO Hash fuer UserId!!!
 	private String firstName;
 	private String lastName;
 	private String eMail;
-	private long balance; // TODO maximales Negativkonto, sonst keine Transaktion möglich
+	private long balance;
 	@Enumerated(EnumType.STRING)
 	private UserRole userRole;
-	
-	
-	// TODO OneToMany nicht sinnvoll
-
+	private String password;
 	@OneToMany(mappedBy = "userAccount", cascade = CascadeType.ALL) //, fetch = FetchType.LAZY)
 	private List<Deposit> deposit = new ArrayList<>();
 
@@ -105,12 +109,22 @@ public class UserAccount implements Serializable{
 		this.deposit = deposit;
 	}
 
+	
+	// TODO PW in Klasse sicher?
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
 	@Override
 	public String toString() {
 		return "UserAccount [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", eMail=" + eMail
 				+ ", balance=" + balance + ", userRole=" + userRole + ", deposit=" + deposit + "]"; // + ", deposit=" + deposit
 	}
+
 
 	public static Comparator<UserAccount> balanceComparator = Comparator.comparingLong(UserAccount::getBalance);
 	public static Comparator<UserAccount> balanceComparatorRev = Comparator.comparingLong(UserAccount::getBalance).reversed();

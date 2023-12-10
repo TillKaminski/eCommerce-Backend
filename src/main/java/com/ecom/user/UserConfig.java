@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class UserConfig {
 	
-	// TODO Überflüssig, da gemeinsame MyConfig
+	// TODO DEL Überflüssig, da gemeinsame MyConfig
 	
 	@Bean
 	CommandLineRunner commandLineRunnerUser (UserRepository userRepository) {

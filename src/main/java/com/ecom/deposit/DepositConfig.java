@@ -4,10 +4,18 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/*
+ * 
+ * 	Zahlungen Dummys
+ * 
+ * 
+ */
+
+
 @Configuration
 public class DepositConfig {
 	
-	// TODO Überflüssig, da gemeinsame MyConfig
+	// TODO DEL Überflüssig, da gemeinsame MyConfig
 	
 	@Bean
 	CommandLineRunner commandLineRunnerDeposit(DepositRepository depositRepositry) {

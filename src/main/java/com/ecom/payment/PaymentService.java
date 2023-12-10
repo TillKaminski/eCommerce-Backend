@@ -7,6 +7,13 @@ import com.ecom.deposit.DepositService;
 import com.ecom.user.UserAccount;
 import com.ecom.user.UserService;
 
+
+/*
+ * 
+ * 	Reicht Zahlungsanfragen weiter
+ * 	Initiiert Verarbeitung von Zahlung auf Kunden und Zahlungsebene
+ */
+
 @Service
 public class PaymentService {
 	private final UserService userService;

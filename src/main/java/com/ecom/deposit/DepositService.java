@@ -10,6 +10,15 @@ import org.springframework.stereotype.Service;
 
 import com.ecom.user.UserAccount;
 
+
+/*
+ * 	Stellt Funktionen für Zahlungsanfragen bereit
+ * 	
+ * 
+ * 
+ */
+
+
 @Service
 public class DepositService {
 
@@ -18,6 +27,8 @@ public class DepositService {
 	public DepositService(DepositRepository depositRepository) {
 		this.depositRepository = depositRepository;
 	}	
+	
+	// TODO DO !!! Nur Zahlungen von USER, EMPLOYEE aus Ergebnissen nehmen
 	
 	// Zahlungen auf/absteigend nach Datum sortiert, Komparator in Klasse implementiert
 	public List<Deposit> getDepositSorted(boolean reverse) {
@@ -58,7 +69,7 @@ public class DepositService {
 			System.out.println("Error: " + e.getMessage());
 		}
 		
-		// TODO Filterung nach Datum im Service sinnvoll? Auslagerung in Repo möglich
+		// Filterung nach Datum im Service sinnvoll? Auslagerung in Repo möglich
 		for (Deposit deposit : depositPeriod) {
 
 			if (dateBegin != null) {
@@ -81,7 +92,7 @@ public class DepositService {
 	}
 	
 	
-	// TODO Testen!!!
+	// TODO TEST Summe Zahlungen 
 	// Summe der Zahlungen in bestimmten Zeitraum, Zugriff auf "getDepositPeriod"?!
 	public Long getDepositSumPeriod(String strDateBegin, String strDateEnd) {
 		
@@ -121,7 +132,7 @@ public class DepositService {
 		}
 
 		for (Deposit deposit : depositSumPeriod) {
-			// TODO Format Datum konvertieren/prüfen
+			// Format Datum konvertieren/prüfen
 			// dateBegin oder dateEnd => kein Datum gesetzt => keine Grenze für Einträge
 			if (dateBegin != null) {
 				boolBegin = (deposit.getDate().isAfter(dateBegin) || deposit.getDate().equals(dateBegin)) ? true
@@ -137,7 +148,7 @@ public class DepositService {
 
 			sumDeposit = (boolBegin && boolEnd) ? sumDeposit + deposit.getDepositValue() : sumDeposit;
 
-			// TODO Exit for möglich, da Liste sortiert
+			// Exit for möglich, da Liste sortiert
 
 		}
 		return sumDeposit;
@@ -160,7 +171,7 @@ public class DepositService {
 	}
 	
 	public Deposit addDeposit(UserAccount userAccount, Deposit deposit) {
-		if (deposit.getDepositValue() > 0L) {deposit.setAuthorized(true);}; // TODO Zahlungen > 0 immer moeglich?! eventuell anpassen
+		if (deposit.getDepositValue() > 0L) {deposit.setAuthorized(true);}; // TODO ? Zahlungen > 0 immer moeglich?! eventuell anpassen
 		deposit.setUserAccount(userAccount);
 		this.depositRepository.save(deposit);
 		return deposit;

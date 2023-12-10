@@ -14,6 +14,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface UserRepository extends JpaRepository<UserAccount, Long> {
 	
 	// @Query("SELECT * FROM UserAccount LEFT JOIN Deposit WHERE Deposit.user_account_id = :userAccountId")
-	// UserAccount finfindIdWithDeposit(@Param("userAccountId") Long userAccountId);
+	// UserAccount findIdWithDeposit(@Param("userAccountId") Long userAccountId);
 
 }

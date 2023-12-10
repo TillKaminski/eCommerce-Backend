@@ -12,6 +12,13 @@ import com.ecom.deposit.DepositRepository;
 import com.ecom.user.UserAccount;
 import com.ecom.user.UserRepository;
 
+
+/*
+ * Erstellung von Dummy-Daten
+ * 
+ * 
+ */
+
 @Component
 public class MyConfig implements CommandLineRunner {
 
@@ -46,7 +53,7 @@ public class MyConfig implements CommandLineRunner {
 		
 		userRepository.saveAll(List.of(user, user2, user3, user4)); 
        
-		LocalDate nowDate = LocalDate.now();  // TODO Date -> LocalDate
+		LocalDate nowDate = LocalDate.now();  // TODO DO LocalDate ausreichend?!
 		
 		Deposit frst = new Deposit(LocalDate.now(), 44444L, true, user3);
 		//date, Long depositValue, boolean authorized, UserAccount userAccount

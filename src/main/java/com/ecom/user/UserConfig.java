@@ -7,6 +7,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 
+/*
+ * 	Konfiguration von Datenbankeinträgen, Möglichkeit Dummys anzulegen für Tests
+ * 
+ * 
+ */
+
+
 @Configuration
 public class UserConfig {
 	

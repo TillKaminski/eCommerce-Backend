@@ -6,6 +6,19 @@ import org.springframework.stereotype.Service;
 
 import com.ecom.deposit.Deposit;
 
+/*
+ * 	
+ * 	Nimmt Anfragen vom Controller entgegen und verarbeite diese
+ * 
+ * 	Standardoperationen aus JPA-Repo Interface
+ *
+ * 	Business Logic wird an dieser Stelle implementiert
+ * 
+ * 
+ */
+
+
+
 @Service
 public class UserService {
 

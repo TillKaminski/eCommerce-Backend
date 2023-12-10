@@ -39,7 +39,12 @@ public class MyConfig implements CommandLineRunner {
 		user3.setLastName("User_03");
 		user3.setBalance(5L);
 		
-		userRepository.saveAll(List.of(user, user2, user3)); 
+		UserAccount user4 = new UserAccount();
+		user4.setFirstName("H2_neu");
+		user4.setLastName("H2_neu");
+		user4.setBalance(555L);
+		
+		userRepository.saveAll(List.of(user, user2, user3, user4)); 
        
 		LocalDate nowDate = LocalDate.now();  // TODO Date -> LocalDate
 		

@@ -15,6 +15,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 //import com.ecom.deposit.Deposit;
 
+/*
+ * 
+ * 	Controller um HTTP Requests an Service weiterzureichen
+ * 	nur für Benutzerkonten zuständig
+ * 
+ * 	URLs:
+ *	"/all"
+ * 	"/allsorted"
+ * 	"/edit"
+ * 	"/create"
+ * 	"/delete/[ID]"
+ * 
+ * 
+ */
+
+
+
 @RestController
 @RequestMapping(path = "api")
 public class UserController {

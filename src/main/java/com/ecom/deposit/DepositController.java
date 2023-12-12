@@ -1,22 +1,18 @@
 package com.ecom.deposit;
-import java.time.LocalDate;
+//import java.time.LocalDate;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ecom.user.UserAccount;
 
 /*
  * 	Verarbeitet Anfragen für Zahlungen
  * 
- * 	URL: api
+ * 	URLs: api
  * 	"/{userId}/payments" 
  * 	"/{userId}/paymentssorted/{boolOrder}"
  * 	"/payments/sumperiod/{dateBegin}/{dateEnd}"
@@ -40,41 +36,69 @@ public class DepositController {
 	@GetMapping (path = "/{userId}/payments")
 	public ResponseEntity<List<Deposit>> getPayments(@PathVariable("userId") Long userId) {
 		List<Deposit> deposit = depositService.getDepositByUserId(userId);
-		System.out.println("€€€DepoContr" + userId);
+		//System.out.println("€€€DepoContr" + userId);
 		
-		LocalDate testDate = LocalDate.now();
-		System.out.println("€€€Date" + testDate);
+		//LocalDate testDate = LocalDate.now();
+		//System.out.println("€€€Date" + testDate);
 		return new ResponseEntity<>(deposit, HttpStatus.OK );
 	}
 	
 	@GetMapping (path = "/{userId}/paymentssorted/{boolOrder}")
-	public ResponseEntity<List<Deposit>> getPaymentsSorted(@PathVariable("userId") Long userId, @PathVariable("boolOrder") Boolean boolOrder) {
+	public ResponseEntity<List<Deposit>> getPaymentsSorted(@PathVariable("userId") Long userId, @PathVariable("boolOrder") String stringOrder) {
+		Boolean boolOrder = (stringOrder == "up") ? true : false; // == "down" abfragen?!
+		System.out.println(stringOrder);
 		List<Deposit> deposit = depositService.getDepositByUserIdSorted(userId, boolOrder);
 		//System.out.println("€€€DepoContr" + userId);
 		return new ResponseEntity<>(deposit, HttpStatus.OK );
 	}
 	
-	@GetMapping (path = "/payments/sumperiod/{dateBegin}/{dateEnd}")
+	@GetMapping (path = "/payments/sum/{dateBegin}/{dateEnd}")
 	public ResponseEntity<Long> getPaymentSum(@PathVariable("dateBegin") String strDateBegin, @PathVariable("dateEnd") String strDateEnd) {
-		System.out.println("String " + strDateBegin);
-		System.out.println("String " + strDateEnd);
+		//System.out.println("String " + strDateBegin);
+		//System.out.println("String " + strDateEnd);
 		return new ResponseEntity<>(depositService.getDepositSumPeriod(strDateBegin, strDateEnd), HttpStatus.OK);  
 	}
 	
+	@GetMapping (path = "/payments/summissing/{dateBegin}/{dateEnd}")
+	public ResponseEntity<Long> getPaymentSumMissing(@PathVariable("dateBegin") String strDateBegin, @PathVariable("dateEnd") String strDateEnd) {
+		//System.out.println("String " + strDateBegin);
+		//System.out.println("String " + strDateEnd);
+		return new ResponseEntity<>(depositService.getDepositSumMissingPeriod(strDateBegin, strDateEnd), HttpStatus.OK);  
+	}
 	
+	
+	
+	@GetMapping (path = "/payments/{dateBegin}/{dateEnd}")
+	public ResponseEntity<List<Deposit>> getPaymentsPeriod(@PathVariable("dateBegin") String strDateBegin, @PathVariable("dateEnd") String strDateEnd) {
+		//System.out.println("String " + strDateBegin);
+		//System.out.println("String " + strDateEnd);
+		return new ResponseEntity<>(depositService.getDepositPeriod(strDateBegin, strDateEnd), HttpStatus.OK);  
+	}
+	
+	
+	// Test
+	@GetMapping (path = "/pall")
+	public ResponseEntity<List<Deposit>> getAlld() {
+		//System.out.println("String " + strDateBegin);
+		//System.out.println("String " + strDateEnd);
+		return new ResponseEntity<>(depositService.getde(), HttpStatus.OK);  
+	}
+	
+	/*
 	@PostMapping (path = "/addpayment")
 	// TODO ? PostMapping nicht notwendig, da Mapping in PaymentController. Zwei Bodies nicht möglich
 	public ResponseEntity<Deposit> addDeposit(@RequestBody UserAccount userAccount, @RequestBody Deposit deposit) {
 		Deposit tmpDeposit = depositService.addDeposit(userAccount, deposit);
 		return new ResponseEntity<>(tmpDeposit, HttpStatus.OK);
 	}
-	
-	@PutMapping (path = "/resubpayment")
+	*/
+	/*
+	@PutMapping (path = "/{userId}/resubpayment")
 	// TODO DO nur für Mitarbeiter
-	public ResponseEntity<Deposit> resubmitDeposit(@RequestBody UserAccount userAccount, @RequestBody Deposit deposit) {
-		Deposit tmpDeposit = depositService.addDeposit(userAccount, deposit);
+	public ResponseEntity<Deposit> resubmitDeposit(@PathVariable Long userAccountId, @RequestBody Deposit deposit) {
+		Deposit tmpDeposit = depositService.addDeposit(userAccountId, deposit);
 		return new ResponseEntity<>(tmpDeposit, HttpStatus.OK);
 	}
-	
+	*/
 	
 }

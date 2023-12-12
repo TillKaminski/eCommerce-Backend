@@ -35,4 +35,12 @@ public class PaymentService {
 		Deposit tmpDeposit = depositService.addDeposit(userAccount, deposit); 	//Kunden mit Zahlung verknüpfen
 		return userService.addDeposit(userAccount, tmpDeposit);					//Kundendaten updaten
 	}
+	
+	public boolean resubmitDeposit(UserAccount userAccount, Deposit deposit) {
+		this.depositService.resubmitDeposit(userAccount, deposit); 	
+		return this.userService.resubmitDeposit(userAccount, deposit);			//Erneute Zahlung, Anzahl Transaktionen unverändert
+	}
+		
+	
+	
 }

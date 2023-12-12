@@ -40,8 +40,9 @@ public class UserAccount implements Serializable{
 	// TODO DO Hash fuer UserId!!!
 	private String firstName;
 	private String lastName;
-	private String eMail;
+	private String email;
 	private long balance;
+	private long numberTransactions;
 	@Enumerated(EnumType.STRING)
 	private UserRole userRole;
 	private String password;
@@ -54,8 +55,9 @@ public class UserAccount implements Serializable{
 		this.id = -1L;
 		this.firstName = "temp_firstName";
 		this.lastName = "temp_lastName";
-		this.eMail = "temp_eMail";
+		this.email = "temp_eMail";
 		this.balance = 1000L;
+		this.numberTransactions = 0L;
 		this.userRole = UserRole.USER;
 	}
 	
@@ -63,8 +65,9 @@ public class UserAccount implements Serializable{
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.eMail = eMail;
+		this.email = eMail;
 		this.balance = balance;
+		this.numberTransactions = 0L;
 		this.userRole = userRole;
 	}
 	
@@ -84,10 +87,10 @@ public class UserAccount implements Serializable{
 		this.lastName = lastName;
 	}
 	public String geteMail() {
-		return eMail;
+		return email;
 	}
 	public void seteMail(String eMail) {
-		this.eMail = eMail;
+		this.email = eMail;
 	}
 	public long getBalance() {
 		return balance;
@@ -121,8 +124,17 @@ public class UserAccount implements Serializable{
 
 	@Override
 	public String toString() {
-		return "UserAccount [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", eMail=" + eMail
+		return "UserAccount [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", eMail=" + email
 				+ ", balance=" + balance + ", userRole=" + userRole + ", deposit=" + deposit + "]"; // + ", deposit=" + deposit
+	}
+
+
+	public long getNumberTransactions() {
+		return numberTransactions;
+	}
+
+	public void setNumberTransactions(long numberTransactions) {
+		this.numberTransactions = numberTransactions;
 	}
 
 

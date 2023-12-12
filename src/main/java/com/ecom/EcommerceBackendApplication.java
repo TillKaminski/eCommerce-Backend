@@ -9,18 +9,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-/*
- * 		pom.xml H2 ausgetauscht
-		<dependency>
-			<groupId>com.mysql</groupId>
-			<artifactId>mysql-connector-j</artifactId>
-			<scope>runtime</scope>
-		</dependency> 
- */
-
-
-
-
 @SpringBootApplication
 public class EcommerceBackendApplication {
 

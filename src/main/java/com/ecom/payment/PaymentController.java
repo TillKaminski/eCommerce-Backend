@@ -42,22 +42,29 @@ public class PaymentController {
 		if (paymentService.verifyUser(userId) != null) {
 			UserAccount userAccount = paymentService.verifyUser(userId);
 			Boolean paymentSuccess = paymentService.addDeposit(userAccount, deposit);
+			//System.out.println(paymentSuccess);
 			return new ResponseEntity<>(paymentSuccess, HttpStatus.OK);
 		}
 		return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
 	}
 	
 	@PutMapping (path = "{userId}/resubpayment")
-	// Reicht Zahlung an Kunden und Zahlung weiter
 	// TODO DO nur für Mitarbeiter
 	public ResponseEntity<Boolean> resubmitDeposit(@PathVariable("userId") Long userId, @RequestBody Deposit deposit) {
 		if (paymentService.verifyUser(userId) != null) {
 			UserAccount userAccount = paymentService.verifyUser(userId);
-			Boolean paymentSuccess = paymentService.addDeposit(userAccount, deposit);
+			// TODO DO Zahlung authorisiern, keine neue anlegen
+			
+			//deposit.setAuthorized(true);
+			
+			Boolean paymentSuccess = paymentService.resubmitDeposit(userAccount, deposit);
 			return new ResponseEntity<>(paymentSuccess, HttpStatus.OK);
 		}
 		return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
 	}
+	
+
+
 	
 	
 }

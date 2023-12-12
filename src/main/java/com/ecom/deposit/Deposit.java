@@ -24,7 +24,6 @@ import jakarta.persistence.Table;
  * 
  */
 
-
 @Entity
 @Table(name = "deposit")
 public class Deposit {
@@ -34,6 +33,7 @@ public class Deposit {
 	private Long id;
 	private LocalDate date;
 	private Long depositValue;
+	private String description;
 	private boolean authorized;
 	@ManyToOne
 	@JoinColumn(name = "user_account_id") //, updatable = false, nullable = false)
@@ -47,14 +47,16 @@ public class Deposit {
 		this.id = -1L;
 		this.date = LocalDate.now();
 		this.depositValue = 0L;
+		this.description = "tmp Description";
 		this.authorized = false;
 		//this.userAccount = new UserAccount("Deposit Name", "Deposit lastName", "Deposit eMail", 1000L, UserRole.EMPLOYEE);
 	}
 	
-	public Deposit(LocalDate date, Long depositValue, boolean authorized, UserAccount userAccount) {
+	public Deposit(LocalDate date, Long depositValue, String description, boolean authorized, UserAccount userAccount) {
 		super();
 		this.date = date;
 		this.depositValue = depositValue;
+		this.description = description;
 		this.authorized = authorized;
 		this.userAccount = userAccount;
 	}
@@ -73,6 +75,14 @@ public class Deposit {
 
 	public void setDepositValue(Long depositValue) {
 		this.depositValue = depositValue;
+	}
+	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public boolean isAuthorized() {
@@ -97,6 +107,10 @@ public class Deposit {
 	
 	
 	
+
+
+
+
 	public static Comparator<Deposit> dateComparator = Comparator.comparing(Deposit::getDate);
 	public static Comparator<Deposit> dateComparatorRev = Comparator.comparing(Deposit::getDate).reversed();
 	

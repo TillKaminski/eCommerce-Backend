@@ -16,12 +16,12 @@ import com.ecom.user.UserRole;
  */
 
 @Service
-public class RegistrationService {
+public class RegistService {
 	
-	private final RegistrationRepository registrationRepository;
+	private final RegistRepository registrationRepository;
 	
 	// DI
-	public RegistrationService(RegistrationRepository registrationRepository) {
+	public RegistService(RegistRepository registrationRepository) {
 		this.registrationRepository = registrationRepository;
 	}
 	
@@ -32,7 +32,7 @@ public class RegistrationService {
 	
 	public UserAccount registerUser(UserAccount userAccount) {
 		
-		UserAccount checkUser = registrationRepository.findUserAccountByEMail(userAccount.geteMail()).get();
+		UserAccount checkUser = registrationRepository.findUserAccountByEmail(userAccount.geteMail()).get();
 		if (checkUser == null) {
 			UserAccount registerAccount = new UserAccount(userAccount.getFirstName(), userAccount.getLastName(),
 					userAccount.geteMail(), userAccount.getBalance(), userAccount.getUserRole());
@@ -47,14 +47,19 @@ public class RegistrationService {
 		}
 	}
 	
-	public String loginUser(UserAccount userAccount) {
+	public UserAccount getUser(String email) {
+		UserAccount userByEmail = registrationRepository.findUserAccountByEmail(email).get();
+		return userByEmail;
+	}
+	
+	public String loginUser(Long userAccountId, String userAccountPassword) {
 		
 		UserRole loginRole;
 		
 		// Exceptions
 		try {
-			UserAccount loginAccount = registrationRepository.findById(userAccount.getId()).get();
-			if (loginAccount.getPassword() == hashPassword(userAccount.getPassword())) {
+			UserAccount loginAccount = registrationRepository.findById(userAccountId).get();
+			if (loginAccount.getPassword() == hashPassword(userAccountPassword)) {
 				loginRole = loginAccount.getUserRole();	
 			} else {
 				loginRole = UserRole.DENIED;
@@ -67,19 +72,5 @@ public class RegistrationService {
 		}
 		return loginRole.toString();	
 	}
-
-	/*
-	private long id;
-	private String firstName;
-	private String lastName;
-	private String eMail;
-	private long balance;
-	private UserRole userRole;
-	private String password;
-
-	 */
-	
-	
-	
 
 }

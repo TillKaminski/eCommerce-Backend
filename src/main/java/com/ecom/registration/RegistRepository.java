@@ -8,6 +8,6 @@ import com.ecom.user.UserAccount;
 
 
 // sinnvoll? entspricht UserRepo
-public interface RegistrationRepository extends JpaRepository<UserAccount, Long> {
-	Optional<UserAccount> findUserAccountByEMail(String userAccountEMail);
+public interface RegistRepository extends JpaRepository<UserAccount, Long> {
+	Optional<UserAccount> findUserAccountByEmail(String userAccountEMail);
 }

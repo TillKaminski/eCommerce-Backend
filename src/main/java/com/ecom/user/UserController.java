@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
  * 	nur für Benutzerkonten zuständig
  * 
  * 	URLs: api
- * 
  *	"/all"
  * 	"/allsorted"
  * 	"/edit"
@@ -49,17 +48,14 @@ public class UserController {
 	//
 	@GetMapping (path = "/all")
 	public ResponseEntity <List<UserAccount>> getUsers() {
-		List<UserAccount> users = userService.getUserAll();
-		System.out.println("€€€UserContr" + users);
-		/*
-			for (int i = 0; i < users.size(); i++) {
-				UserAccount tempAcc = new UserAccount();
-				tempAcc =  users.get(i);
-				
-				System.out.println(tempAcc);
-			}
-		*/		
+		List<UserAccount> users = userService.getUserAll();	
 		return new ResponseEntity<> (users, HttpStatus.OK);
+	}
+	
+	@GetMapping (path = "/{userId}")
+	public ResponseEntity<UserAccount> getUser(@PathVariable Long userId) {
+		UserAccount user = userService.getUserById(userId);	
+		return new ResponseEntity<> (user, HttpStatus.OK);
 	}
 	
 	@GetMapping (path = "/allsorted")
@@ -68,6 +64,14 @@ public class UserController {
 		List<UserAccount> users = userService.getUserSorted();		
 		return new ResponseEntity<> (users, HttpStatus.OK);
 	}
+	
+	@GetMapping (path = "/allsortedrev")
+	public ResponseEntity <List<UserAccount>> getUsersSortedRev() {
+		System.out.println("€€€SORT");
+		List<UserAccount> users = userService.getUserSortedRev();		
+		return new ResponseEntity<> (users, HttpStatus.OK);
+	}
+	
 	
 	@PutMapping (path = "/edit")
 	public ResponseEntity<UserAccount> editUser(@RequestBody UserAccount userAccount) {

@@ -100,60 +100,24 @@ public class DepositService {
 		List<Deposit> depositSumPeriod = this.getDepositPeriod(strDateBegin, strDateEnd);
 		
 		for (Deposit deposit : depositSumPeriod) {
-			resultSumPeriod += deposit.getDepositValue();
+			resultSumPeriod = (deposit.isAuthorized()) ? resultSumPeriod += deposit.getDepositValue() : resultSumPeriod;
 		}
 		
 		return resultSumPeriod;
-		
-		/*
-		List<Deposit> depositSumPeriod = depositRepository.findAll();
-		depositSumPeriod.sort(Deposit.dateComparator); // Reihenfolge richtig?
-
-		Long sumDeposit = 0L;
-		LocalDate dateBegin;
-		LocalDate dateEnd;
-
-		Boolean boolBegin = false;
-		Boolean boolEnd = false;
-
-		String dateFormat = "yyyy-MM-dd";
-		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(dateFormat);
-
-		try {
-			dateBegin = LocalDate.parse(strDateBegin, dateFormatter);
-			dateEnd = LocalDate.parse(strDateEnd, dateFormatter);
-		} catch (RuntimeException e) {
-
-			dateBegin = null;
-			dateEnd = null;
-
-			System.out.println("Format(Date) invalid!");
-			System.out.println("Error: " + e.getMessage());
-		}
-
-		for (Deposit deposit : depositSumPeriod) {
-			// Format Datum konvertieren/prüfen
-			// dateBegin oder dateEnd => kein Datum gesetzt => keine Grenze für Einträge
-			if (dateBegin != null) {
-				boolBegin = (deposit.getDate().isAfter(dateBegin) || deposit.getDate().equals(dateBegin)) ? true
-						: false;
-			} else {
-				boolBegin = true;
-			}
-			if (dateEnd != null) {
-				boolEnd = (deposit.getDate().isBefore(dateEnd) || deposit.getDate().equals(dateEnd)) ? true : false;
-			} else {
-				boolEnd = true;
-			}
-
-			sumDeposit = (boolBegin && boolEnd) ? sumDeposit + deposit.getDepositValue() : sumDeposit;
-
-			// Exit for möglich, da Liste sortiert
-
-		}
-		return sumDeposit;
-		*/
 	}
+	
+	public Long getDepositSumMissingPeriod(String strDateBegin, String strDateEnd) {
+		
+		Long resultSumPeriod = 0L;
+		List<Deposit> depositSumPeriod = this.getDepositPeriod(strDateBegin, strDateEnd);
+		
+		for (Deposit deposit : depositSumPeriod) {
+			resultSumPeriod = (!deposit.isAuthorized()) ? resultSumPeriod += deposit.getDepositValue() : resultSumPeriod;
+		}
+		
+		return resultSumPeriod;
+	}
+	
 
 	public List<Deposit> getDepositByUserId(Long userId) {
 		return depositRepository.findDepositByUserAccountId(userId).get();
@@ -170,11 +134,33 @@ public class DepositService {
 		return deposit;
 	}
 	
-	public Deposit addDeposit(UserAccount userAccount, Deposit deposit) {
-		if (deposit.getDepositValue() > 0L) {deposit.setAuthorized(true);}; // TODO ? Zahlungen > 0 immer moeglich?! eventuell anpassen
+	public Deposit addDeposit(UserAccount userAccount, Deposit deposit) {		
+		if (deposit.getDepositValue() >= 0L) {deposit.setAuthorized(true);}; // TODO ? Zahlungen > 0 immer moeglich?! eventuell anpassen
 		deposit.setUserAccount(userAccount);
-		this.depositRepository.save(deposit);
+		Deposit createDeposit = new Deposit(LocalDate.now(), deposit.getDepositValue(), deposit.getDescription(), deposit.isAuthorized(), userAccount);
+		
+		this.depositRepository.save(createDeposit);
+		return createDeposit;
+	}
+	/*
+	this.date = date;
+	this.depositValue = depositValue;
+	this.description = description;
+	this.authorized = authorized;
+	this.userAccount = userAccount;
+	*/
+	public Deposit resubmitDeposit(UserAccount userAccount, Deposit deposit) {
+		System.out.println(deposit.getId() + deposit.getDescription() + deposit.isAuthorized() + deposit.getUserAccount());
+		deposit.setAuthorized(true);
+		deposit.setUserAccount(userAccount);
+		System.out.println(deposit.getId() + deposit.getDescription() + deposit.isAuthorized() + deposit.getUserAccount());
+		Deposit depo = this.depositRepository.save(deposit);
+		System.out.println(depo.getId() + depo.getDescription() + deposit.isAuthorized() + deposit.getUserAccount());
 		return deposit;
+	}
+	
+	public List<Deposit> getde() {
+		return this.depositRepository.findAll();
 	}
 	
 	

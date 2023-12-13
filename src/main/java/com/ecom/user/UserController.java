@@ -16,26 +16,21 @@ import org.springframework.web.bind.annotation.RestController;
 //import com.ecom.deposit.Deposit;
 
 /*
- * 
  * 	Controller um HTTP Requests an Service weiterzureichen
  * 	nur für Benutzerkonten zuständig
  * 
  * 	URLs: api
  *	"/all"
  * 	"/allsorted"
+ * 	"/allsortedrev"
  * 	"/edit"
  * 	"/create"
  * 	"/delete/[ID]"
- * 
- * 
  */
-
-
 
 @RestController
 @RequestMapping(path = "api")
 public class UserController {
-	
 	
 	//Dependency Injection
 	private final UserService userService;
@@ -43,7 +38,6 @@ public class UserController {
 	public UserController(UserService userService) {
 		this.userService = userService;
 	}
-	
 	
 	//
 	@GetMapping (path = "/all")
@@ -60,18 +54,17 @@ public class UserController {
 	
 	@GetMapping (path = "/allsorted")
 	public ResponseEntity <List<UserAccount>> getUsersSorted() {
-		System.out.println("€€€SORT");
+		//System.out.println("€€€SORT");
 		List<UserAccount> users = userService.getUserSorted();		
 		return new ResponseEntity<> (users, HttpStatus.OK);
 	}
 	
 	@GetMapping (path = "/allsortedrev")
 	public ResponseEntity <List<UserAccount>> getUsersSortedRev() {
-		System.out.println("€€€SORT");
+		//System.out.println("€€€SORT");
 		List<UserAccount> users = userService.getUserSortedRev();		
 		return new ResponseEntity<> (users, HttpStatus.OK);
 	}
-	
 	
 	@PutMapping (path = "/edit")
 	public ResponseEntity<UserAccount> editUser(@RequestBody UserAccount userAccount) {
@@ -90,14 +83,4 @@ public class UserController {
 		userService.deleteUserByID(userID);
 		return new ResponseEntity<>("Deleted User with ID: " + userID, HttpStatus.OK);
 	}
-	
-	
-	/*
-	// --- Zahlungen behandeln ---
-	@PutMapping (path = "/edit/deposit")
-	// TODO DEL PutMapping nicht notwendig, da Mapping in PaymentController. Zwei Bodies nicht möglich
-	public ResponseEntity<Boolean> addDeposit(@RequestBody UserAccount userAccount, @RequestBody Deposit deposit) {
-		return new ResponseEntity<>(userService.addDeposit(userAccount, deposit), HttpStatus.OK);
-	}
-	*/
 }

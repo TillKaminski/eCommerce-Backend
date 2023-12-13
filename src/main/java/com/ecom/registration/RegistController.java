@@ -2,14 +2,15 @@ package com.ecom.registration;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+//import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ecom.user.UserAccount;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /*
  * 	Registrierung und Login
@@ -22,7 +23,8 @@ import com.ecom.user.UserAccount;
  *
  *	URLs: api/user
  *	"/register"
- *	"/login"
+ *	"/login/[userMail]"
+ *	
  */
 
 
@@ -33,26 +35,55 @@ public class RegistController {
 	//DI
 	private final RegistService registrationService;
 	
+	//Wrapper
+	public static class LoginBody{
+		@JsonProperty("email")
+		private String email;
+		@JsonProperty("password")
+		private String password;
+		
+		/*
+		public LoginBody(String email, String password) {
+			super();
+			this.email = email;
+			this.password = password;
+		}
+		*/
+
+		public String getEmail() {
+			return email;
+		}
+
+		public String getPassword() {
+			return password;
+		}		
+	}
+	
 	public RegistController(RegistService registrationService) {
 		this.registrationService = registrationService;
 	}
 	
 	@PostMapping(path =  "/register")
 	public ResponseEntity<UserAccount> registerUser(@RequestBody UserAccount userAccount) {
+		System.out.println("###123 " + userAccount);
 		return new ResponseEntity<>(registrationService.registerUser(userAccount), HttpStatus.CREATED);
 	}
-	
-	
+		
 	// TODO ? POST für RequestBody
-	@PostMapping(path = "/login/{userId}")
-	public ResponseEntity<String> loginUser(@PathVariable Long userId, @RequestBody String userAccountPassword) {
-		return new ResponseEntity<>(registrationService.loginUser(userId, userAccountPassword), HttpStatus.OK);
+	// Mail + PW = UserId;
+	@PostMapping(path = "/login/{userMail}")
+	public ResponseEntity<Long> loginUser(@PathVariable("userMail") String userMail, @RequestBody String userPassword) {
+		System.out.println("xxx!!" + userMail + userPassword);
+		return new ResponseEntity<>(registrationService.loginUser(userMail, userPassword), HttpStatus.OK);
 	}
 	
 	@PostMapping(path = "/get")
-	public ResponseEntity<UserAccount> getUser(@RequestBody String email) {
-		return new ResponseEntity<>(registrationService.getUser(email), HttpStatus.OK);
+	public ResponseEntity<UserAccount> getUser(@RequestBody LoginBody loginBody) {
+		return new ResponseEntity<>(registrationService.getUser(loginBody.getEmail()), HttpStatus.OK);
 	}
+	
+
+	
 	
 	
 

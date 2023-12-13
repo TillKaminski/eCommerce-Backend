@@ -9,8 +9,6 @@ import org.springframework.context.annotation.Configuration;
 
 /*
  * 	Konfiguration von Datenbankeinträgen, Möglichkeit Dummys anzulegen für Tests
- * 
- * 
  */
 
 
@@ -27,11 +25,7 @@ public class UserConfig {
 			//user2.setLastName("Test LastName");
 			//UserAccount user3 = new UserAccount("TestfirstName", "Test String lastName", "Test String eMail", 2000L, UserRole.ADMIN);
 			
-			//userRepository.saveAll(List.of(user1, user2));
-			
-			
-		};
-		
+			//userRepository.saveAll(List.of(user1, user2));		
+		};		
 	}
-
 }

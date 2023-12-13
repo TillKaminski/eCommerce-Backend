@@ -15,14 +15,11 @@ import com.ecom.user.UserAccount;
 
 
 /*
- * 
  * 	Nimmt Zahlungsanfragen entgegen
  * 
  * 	URLs: api/pay
  * 	"[ID]/addpayment"
  * 	"[ID]/resubpayment"
- * 
- * 
  */
 
 @RestController
@@ -42,29 +39,19 @@ public class PaymentController {
 		if (paymentService.verifyUser(userId) != null) {
 			UserAccount userAccount = paymentService.verifyUser(userId);
 			Boolean paymentSuccess = paymentService.addDeposit(userAccount, deposit);
-			//System.out.println(paymentSuccess);
 			return new ResponseEntity<>(paymentSuccess, HttpStatus.OK);
 		}
 		return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
 	}
 	
 	@PutMapping (path = "{userId}/resubpayment")
-	// TODO DO nur für Mitarbeiter
+	// TODO DO nur für Mitarbeiter, Rolle prüfen!
 	public ResponseEntity<Boolean> resubmitDeposit(@PathVariable("userId") Long userId, @RequestBody Deposit deposit) {
 		if (paymentService.verifyUser(userId) != null) {
-			UserAccount userAccount = paymentService.verifyUser(userId);
-			// TODO DO Zahlung authorisiern, keine neue anlegen
-			
-			//deposit.setAuthorized(true);
-			
+			UserAccount userAccount = paymentService.verifyUser(userId);			
 			Boolean paymentSuccess = paymentService.resubmitDeposit(userAccount, deposit);
 			return new ResponseEntity<>(paymentSuccess, HttpStatus.OK);
 		}
 		return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
-	}
-	
-
-
-	
-	
+	}	
 }

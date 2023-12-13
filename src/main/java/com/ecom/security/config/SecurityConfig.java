@@ -4,9 +4,7 @@ import org.springframework.context.annotation.Configuration;
 
 
 /*
- * 
- *  TODO DO	Spring Security noch nicht verwendet
- * 
+ *  TODO DO	Spring Security implementieren
  */
 
 @Configuration
@@ -14,7 +12,8 @@ public class SecurityConfig {
 	/*
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-
+	
+	//Veraltet
 	    http
 	        .authorizeRequests()
 	            .antMatchers("/register", "/css/**", "/js/**").permitAll() // Zugriff auf Registrierung und statische Ressourcen
@@ -28,9 +27,6 @@ public class SecurityConfig {
 	            .logoutUrl("/logout")
 	            .logoutSuccessUrl("/login?logout")
 	            .permitAll();
-
-	    
-	    
 	}
 	*/
 }

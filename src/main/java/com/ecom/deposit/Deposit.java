@@ -18,10 +18,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 /*
- * 
  * 	Tabelle Zahlungen
- * 
- * 
  */
 
 @Entity
@@ -49,7 +46,6 @@ public class Deposit {
 		this.depositValue = 0L;
 		this.description = "tmp Description";
 		this.authorized = false;
-		//this.userAccount = new UserAccount("Deposit Name", "Deposit lastName", "Deposit eMail", 1000L, UserRole.EMPLOYEE);
 	}
 	
 	public Deposit(LocalDate date, Long depositValue, String description, boolean authorized, UserAccount userAccount) {
@@ -106,16 +102,8 @@ public class Deposit {
 	}
 	
 	
-	
-
-
-
 
 	public static Comparator<Deposit> dateComparator = Comparator.comparing(Deposit::getDate);
 	public static Comparator<Deposit> dateComparatorRev = Comparator.comparing(Deposit::getDate).reversed();
 	
-	
-	
-	
-
 }

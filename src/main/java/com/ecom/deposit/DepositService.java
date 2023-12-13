@@ -13,9 +13,6 @@ import com.ecom.user.UserAccount;
 
 /*
  * 	Stellt Funktionen für Zahlungsanfragen bereit
- * 	
- * 
- * 
  */
 
 
@@ -150,16 +147,13 @@ public class DepositService {
 	this.userAccount = userAccount;
 	*/
 	public Deposit resubmitDeposit(UserAccount userAccount, Deposit deposit) {
-		System.out.println(deposit.getId() + deposit.getDescription() + deposit.isAuthorized() + deposit.getUserAccount());
 		deposit.setAuthorized(true);
 		deposit.setUserAccount(userAccount);
-		System.out.println(deposit.getId() + deposit.getDescription() + deposit.isAuthorized() + deposit.getUserAccount());
-		Deposit depo = this.depositRepository.save(deposit);
-		System.out.println(depo.getId() + depo.getDescription() + deposit.isAuthorized() + deposit.getUserAccount());
+		this.depositRepository.save(deposit);
 		return deposit;
 	}
 	
-	public List<Deposit> getde() {
+	public List<Deposit> getPTest() {
 		return this.depositRepository.findAll();
 	}
 	

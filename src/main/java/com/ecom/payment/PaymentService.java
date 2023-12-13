@@ -9,7 +9,6 @@ import com.ecom.user.UserService;
 
 
 /*
- * 
  * 	Reicht Zahlungsanfragen weiter
  * 	Initiiert Verarbeitung von Zahlung auf Kunden und Zahlungsebene
  */

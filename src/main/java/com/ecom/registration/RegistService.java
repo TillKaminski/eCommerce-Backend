@@ -6,13 +6,11 @@ package com.ecom.registration;
 import org.springframework.stereotype.Service;
 
 import com.ecom.user.UserAccount;
-import com.ecom.user.UserRole;
+//import com.ecom.user.UserRole;
 
 /*
- * 
  * 	Legt neue Benutzerkonten an
  * 	Auch für Login verwendet
- * 
  */
 
 @Service
@@ -32,19 +30,20 @@ public class RegistService {
 	
 	public UserAccount registerUser(UserAccount userAccount) {
 		
-		UserAccount checkUser = registrationRepository.findUserAccountByEmail(userAccount.geteMail()).get();
-		if (checkUser == null) {
+		// TODO prüfen ob Mail mehrfach vergeben
+		//UserAccount checkUser = registrationRepository.findUserAccountByEmail(userAccount.getEmail()).get();
+		//if (checkUser == null) {
 			UserAccount registerAccount = new UserAccount(userAccount.getFirstName(), userAccount.getLastName(),
-					userAccount.geteMail(), userAccount.getBalance(), userAccount.getUserRole());
+					userAccount.getEmail(), userAccount.getBalance(), userAccount.getUserRole());
 			// TODO PW wird unverschlüsselt ans BE übertragen?! Problem FE?!
 			registerAccount.setPassword(hashPassword(userAccount.getPassword()));
 			return registrationRepository.save(registerAccount);
-		} else {
-			System.out.println("Email vergeben!");
-			UserAccount registerAccount = new UserAccount();
-			registerAccount.setUserRole(UserRole.DENIED);
-			return registerAccount;
-		}
+		//} else {
+		//	System.out.println("Email vergeben!");
+		//	UserAccount registerAccount = new UserAccount();
+		//	registerAccount.setUserRole(UserRole.DENIED);
+		//	return registerAccount;
+		//}
 	}
 	
 	public UserAccount getUser(String email) {
@@ -52,13 +51,28 @@ public class RegistService {
 		return userByEmail;
 	}
 	
-	public String loginUser(Long userAccountId, String userAccountPassword) {
+	public long loginUser(String email, String userAccountPassword) {
 		
-		UserRole loginRole;
+		System.out.println("Login");
+		UserAccount loginAccount = registrationRepository.findUserAccountByEmail(email).get();
 		
+		System.out.println("Loginx");
+		System.out.println(loginAccount.getPassword());
+		System.out.println(userAccountPassword);
+		
+		if(loginAccount.getPassword().trim() == userAccountPassword.trim()) {
+			System.out.println("Loginxddd");
+			System.out.println(loginAccount.getId());
+			return loginAccount.getId();
+		}
+		return 1L;
+		
+		/*
+		UserRole loginRole = UserRole.DENIED;
+		UserAccount loginAccount = new UserAccount();
 		// Exceptions
 		try {
-			UserAccount loginAccount = registrationRepository.findById(userAccountId).get();
+			loginAccount = registrationRepository.findUserAccountByEmail(email).get();
 			if (loginAccount.getPassword() == hashPassword(userAccountPassword)) {
 				loginRole = loginAccount.getUserRole();	
 			} else {
@@ -66,11 +80,14 @@ public class RegistService {
 			}
 				
 		} catch (Exception e) {
-			loginRole = UserRole.DENIED;
+			if (loginRole == UserRole.DENIED); {
 			System.out.println("Login fehlgeschlagen!");
 			System.out.println("Error: " + e.getMessage());
+			}
 		}
-		return loginRole.toString();	
+		
+		return loginAccount.getId();
+		*/	
 	}
 
 }

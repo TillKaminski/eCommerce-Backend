@@ -21,11 +21,8 @@ import jakarta.persistence.Table;
 
 
 /*
- * 
  * 	Tabelle Benutzer-Konten
- * 
  */
-
 
 @Entity
 @Table(name = "useraccount")
@@ -49,26 +46,24 @@ public class UserAccount implements Serializable{
 	@OneToMany(mappedBy = "userAccount", cascade = CascadeType.ALL) //, fetch = FetchType.LAZY)
 	private List<Deposit> deposit = new ArrayList<>();
 
-	
 	public UserAccount() {
 		super();
-		this.id = -1L;
-		this.firstName = "temp_firstName";
-		this.lastName = "temp_lastName";
-		this.email = "temp_eMail";
-		this.balance = 1000L;
+		//this.firstName = "temp_firstName";
+		//this.lastName = "temp_lastName";
+		//this.email = "temp_Mail";
+		//this.balance = 1000L;
 		this.numberTransactions = 0L;
 		this.userRole = UserRole.USER;
 	}
 	
-	public UserAccount(String firstName, String lastName, String eMail, long balance, UserRole userRole) {
+	public UserAccount(String firstName, String lastName, String email, long balance, UserRole userRole) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.email = eMail;
+		this.email = email;
 		this.balance = balance;
 		this.numberTransactions = 0L;
-		this.userRole = userRole;
+		this.userRole = UserRole.USER; // TODO statisch, anpassen wenn Rollenmanagement
 	}
 	
 	public long getId() {
@@ -86,10 +81,10 @@ public class UserAccount implements Serializable{
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public String geteMail() {
+	public String getEmail() {
 		return email;
 	}
-	public void seteMail(String eMail) {
+	public void setEmail(String eMail) {
 		this.email = eMail;
 	}
 	public long getBalance() {
@@ -124,7 +119,7 @@ public class UserAccount implements Serializable{
 
 	@Override
 	public String toString() {
-		return "UserAccount [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", eMail=" + email
+		return "UserAccount [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
 				+ ", balance=" + balance + ", userRole=" + userRole + ", deposit=" + deposit + "]"; // + ", deposit=" + deposit
 	}
 

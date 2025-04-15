@@ -51,7 +51,7 @@ public class UserDepoConfig implements CommandLineRunner {
 		Deposit dep10 = new Deposit(LocalDate.parse("2010-07-01"), 2222L, "Einzahlung", false, user3);
 		Deposit dep11 = new Deposit(LocalDate.parse("2015-01-01"), 40L, "Test 0,40€", false, user3);
 		Deposit dep12 = new Deposit(LocalDate.parse("2010-01-01"), 1000L, "Test 10€", true, user3);
-		
+
 		depositRepository.saveAll(List.of(dep1, dep2, dep3, dep4, dep5, dep6, dep7, dep8, dep9, dep10, dep11, dep12));
 		/*
 		UserAccount user = new UserAccount();
@@ -88,7 +88,7 @@ public class UserDepoConfig implements CommandLineRunner {
 		
 		userRepository.saveAll(List.of(user, user2, user3, user4)); 
        
-		LocalDate nowDate = LocalDate.now();  // TODO DO LocalDate ausreichend?!
+		LocalDate nowDate = LocalDate.now();
 		
 		Deposit frst = new Deposit(LocalDate.now(), 44444L, "Test myConfig", true, user3);
 		//date, Long depositValue, boolean authorized, UserAccount userAccount

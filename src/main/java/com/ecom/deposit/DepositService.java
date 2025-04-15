@@ -2,20 +2,16 @@ package com.ecom.deposit;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-
-import java.util.List;
+import java.util.*;
 
 import org.springframework.stereotype.Service;
 
 import com.ecom.user.UserAccount;
 
 
-/*
+/**
  * 	Stellt Funktionen für Zahlungsanfragen bereit
  */
-
-
 @Service
 public class DepositService {
 
@@ -156,6 +152,13 @@ public class DepositService {
 	public List<Deposit> getPTest() {
 		return this.depositRepository.findAll();
 	}
-	
-	
+
+
+    public Integer cancelDeposit(Long paymentId, Integer intTokenId) {
+		// TODO getDepositByUserID
+		// Long usrId = 42L;
+		// HashMap<usrId, Deposit> deposits = this.depositRepository.findDepositByUserAccountId(usrId);
+		this.depositRepository.deleteById(paymentId);
+		return intTokenId;
+    }
 }

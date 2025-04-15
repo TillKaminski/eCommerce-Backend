@@ -17,10 +17,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-/*
+/**
  * 	Tabelle Zahlungen
  */
-
 @Entity
 @Table(name = "deposit")
 public class Deposit {

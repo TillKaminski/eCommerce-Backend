@@ -6,14 +6,13 @@ import org.springframework.stereotype.Service;
 
 import com.ecom.deposit.Deposit;
 
-/*
+/**
  * 	Nimmt Anfragen vom Controller entgegen und verarbeite diese
  * 
  * 	Standardoperationen aus JPA-Repo Interface
  *
  * 	Business Logic wird an dieser Stelle implementiert
  */
-
 @Service
 public class UserService {
 
@@ -65,7 +64,7 @@ public class UserService {
 	public boolean addDeposit(UserAccount userAccount, Deposit deposit) {
 		// TODO ? Zahlungen > 0 ?! anpassen, Gebühren etc
 		if (deposit.getDepositValue() >= 0L || deposit.isAuthorized()) {
-			Long editBalance = userAccount.getBalance() + deposit.getDepositValue();
+			long editBalance = userAccount.getBalance() + deposit.getDepositValue();
 			userAccount.setBalance(editBalance);
 			userAccount.setNumberTransactions(userAccount.getNumberTransactions() + 1);
 			userRepository.save(userAccount);
@@ -77,7 +76,7 @@ public class UserService {
 	public boolean resubmitDeposit(UserAccount userAccount, Deposit deposit) {
 		// TODO ? Zahlungen > 0 ?! anpassen, Gebühren etc
 		//System.out.println("TTT" + userAccount.getDeposit());
-			Long editBalance = userAccount.getBalance() + deposit.getDepositValue();
+			long editBalance = userAccount.getBalance() + deposit.getDepositValue();
 			userAccount.setBalance(editBalance);
 			userRepository.save(userAccount);
 			System.out.println(userAccount.getDeposit());

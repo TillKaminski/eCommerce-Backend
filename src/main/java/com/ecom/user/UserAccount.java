@@ -20,10 +20,9 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 
-/*
+/**
  * 	Tabelle Benutzer-Konten
  */
-
 @Entity
 @Table(name = "useraccount")
 public class UserAccount implements Serializable{

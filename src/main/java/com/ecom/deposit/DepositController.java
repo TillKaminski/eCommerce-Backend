@@ -3,14 +3,11 @@ package com.ecom.deposit;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 
-/*
+/**
  * 	Verarbeitet Anfragen für Zahlungen
  * 
  * 	URLs: api
@@ -20,10 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
  * 	"/payments/summissing/[Begin]/[End]"
  * 	"/payments/[Begin]/[End]"
  */
-
-
-
-
 @RequestMapping(path = "api")
 @RestController
 public class DepositController {
@@ -90,5 +83,11 @@ public class DepositController {
 	@GetMapping (path = "/pall")
 	public ResponseEntity<List<Deposit>> getAlld() {
 		return new ResponseEntity<>(depositService.getPTest(), HttpStatus.OK);  
-	}	
+	}
+
+	@PostMapping (path = "/payments/{paymentId}/cancel/{tokenId}")
+	public ResponseEntity<Integer> cancelDeposit(@PathVariable("paymentId") Long paymentId, @PathVariable("tokenId") Integer intTokenId) {
+		return new ResponseEntity<>(depositService.cancelDeposit(paymentId, intTokenId), HttpStatus.OK);
+	}
+
 }

@@ -8,11 +8,10 @@ import com.ecom.user.UserAccount;
 import com.ecom.user.UserService;
 
 
-/*
+/**
  * 	Reicht Zahlungsanfragen weiter
  * 	Initiiert Verarbeitung von Zahlung auf Kunden und Zahlungsebene
  */
-
 @Service
 public class PaymentService {
 	private final UserService userService;
@@ -30,16 +29,15 @@ public class PaymentService {
 		return null;
 	}
 	
-	public boolean addDeposit(UserAccount userAccount, Deposit deposit) {
+	public Deposit addDeposit(UserAccount userAccount, Deposit deposit) {
 		Deposit tmpDeposit = depositService.addDeposit(userAccount, deposit); 	//Kunden mit Zahlung verknüpfen
-		return userService.addDeposit(userAccount, tmpDeposit);					//Kundendaten updaten
+		if (userService.addDeposit(userAccount, tmpDeposit))					//Kundendaten updaten
+			return tmpDeposit;
+		return null;
 	}
 	
 	public boolean resubmitDeposit(UserAccount userAccount, Deposit deposit) {
 		this.depositService.resubmitDeposit(userAccount, deposit); 	
 		return this.userService.resubmitDeposit(userAccount, deposit);			//Erneute Zahlung, Anzahl Transaktionen unverändert
 	}
-		
-	
-	
 }

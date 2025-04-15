@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ecom.user.UserAccount;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-/*
+/**
  * 	Registrierung und Login
  * 
  *	Registriert Benutzer, Gibt Benutzer mit Benutzer.Role zurück
@@ -26,8 +26,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  *	"/login/[userMail]"
  *	
  */
-
-
 @RestController
 @RequestMapping(path = "api/user")
 public class RegistController {

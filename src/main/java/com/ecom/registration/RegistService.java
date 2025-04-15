@@ -8,11 +8,10 @@ import org.springframework.stereotype.Service;
 import com.ecom.user.UserAccount;
 //import com.ecom.user.UserRole;
 
-/*
+/**
  * 	Legt neue Benutzerkonten an
  * 	Auch für Login verwendet
  */
-
 @Service
 public class RegistService {
 	
@@ -24,7 +23,7 @@ public class RegistService {
 	}
 	
 	private String hashPassword(String password) {
-		// TODO DO verschlüsseln!
+		// TODO verschlüsseln!
 		return "hash123" + password + "456hash";
 	}
 	

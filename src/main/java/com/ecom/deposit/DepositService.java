@@ -84,9 +84,6 @@ public class DepositService {
 		return resultDepositPeriod;
 	}
 	
-	
-	// TODO TEST Summe Zahlungen 
-	// Summe der Zahlungen in bestimmten Zeitraum, Zugriff auf "getDepositPeriod"?!
 	public Long getDepositSumPeriod(String strDateBegin, String strDateEnd) {
 		
 		Long resultSumPeriod = 0L;
@@ -135,13 +132,7 @@ public class DepositService {
 		this.depositRepository.save(createDeposit);
 		return createDeposit;
 	}
-	/*
-	this.date = date;
-	this.depositValue = depositValue;
-	this.description = description;
-	this.authorized = authorized;
-	this.userAccount = userAccount;
-	*/
+
 	public Deposit resubmitDeposit(UserAccount userAccount, Deposit deposit) {
 		deposit.setAuthorized(true);
 		deposit.setUserAccount(userAccount);
@@ -153,11 +144,7 @@ public class DepositService {
 		return this.depositRepository.findAll();
 	}
 
-
     public Integer cancelDeposit(Long paymentId, Integer intTokenId) {
-		// TODO getDepositByUserID
-		// Long usrId = 42L;
-		// HashMap<usrId, Deposit> deposits = this.depositRepository.findDepositByUserAccountId(usrId);
 		this.depositRepository.deleteById(paymentId);
 		return intTokenId;
     }

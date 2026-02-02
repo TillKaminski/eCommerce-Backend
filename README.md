@@ -34,17 +34,45 @@ The backend is designed with a service-oriented approach to manage financial tra
 ## 🌐 API Endpoints
 - Configured Cross-Origin Resource Sharing (**CORS**) for Angular frontend integration.
 
-### Transactions (`/api`)
-- `POST /addpayment` – Create a new user transaction.
-- `GET /{userId}/payments` – Retrieve all transactions for a specific user.
-- `GET /payments/sumperiod/{dateBegin}/{dateEnd}` – Filter and sum transactions within a date range (used for staff reporting).
-- `PUT /resubpayment` – Authorize and process a pending withdrawal (Staff action).
+### Transactions & Payments
+Managed via `DepositController` and `PaymentController`.
 
-### User Management (`/api/user`)
-- `POST /register` – Register a new account.
-- `GET /all` – List all registered users (for demonstration purposes).
+| Method   | Endpoint                                 | Description                                     |
+|:---------|:-----------------------------------------|:------------------------------------------------|
+| **POST** | `/api/pay/{userId}/addpayment`           | Create a new transaction for a user.            |
+| **GET**  | `/api/{userId}/payments`                 | Get all payments for a specific user.           |
+| **GET**  | `/api/{userId}/paymentssorted/{order}`   | Get user payments sorted by date (`up`/`down`). |
+| **GET**  | `/api/payments/sum/{begin}/{end}`        | Get total sum of payments in a period.          |
+| **GET**  | `/api/payments/summissing/{begin}/{end}` | Get sum of pending payments in a period.        |
+| **GET**  | `/api/payments/{begin}/{end}`            | List all transactions in a date range.          |
+| **PUT**  | `/api/pay/{userId}/resubpayment`         | Re-submit or authorize a pending payment.       |
+| **POST** | `/api/payments/{id}/cancel/{tokenId}`    | Cancel a specific transaction.                  |
+
+### User Management
+Managed via `UserController`.
+
+| Method     | Endpoint               | Description                        |
+|:-----------|:-----------------------|:-----------------------------------|
+| **GET**    | `/api/all`             | List all registered users.         |
+| **POST**   | `/api/create`          | Register a new user account.       |
+| **PUT**    | `/api/edit`            | Update user account information.   |
+| **GET**    | `/api/{userId}`        | Get details of a specific user.    |
+| **DELETE** | `/api/delete/{userId}` | Remove a user account.             |
+| **GET**    | `/api/allsorted`       | List all users sorted by balances. |
 
 ## 🚀 How to Run
+Tested on Windows 10/11 using Java 17.
+
+### Option 1: Quick Start (Executable JAR)
+1. Download the `.jar` file from the **Releases** section.
+2. Ensure **Java 17** is installed (`java -version`).
+3. Run the application:
+   ```bash
+   java -jar ecommerce_backend.jar
+   ```
+4. **Backend URL**: The API will be available at `http://localhost:8080`.
+
+### Option 2: Development Setup
 1. Clone the repository.
 2. Ensure you have **Java 17** installed.
 3. Run the application:
